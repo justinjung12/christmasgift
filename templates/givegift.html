@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgba(244, 223, 30, 0.56);
+        }
+
+        .gifts {
+            margin-top: 500px;
+            margin-left: 10%;
+        }
+
+        .name {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 30px;
+            font-size: 15px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        .contentinput {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 30px;
+            font-size: 15px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        h2 {
+            margin-left: 35%;
+            margin-top: 30px;
+        }
+        .login-container{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .pw{
+            border: none;
+        }
+        .login-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-title {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1557b0;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>선물 주기</h2>
+    <div class="container">
+        <input type="text" placeholder="닉네임(영어)" class="name">
+        <input type="text" placeholder="입력할 내용" class="contentinput">
+
+        <!-- <input type="submit" class="submitbtn"> -->
+    </div>
+    <div class="val" style="display: none;">{{receivingusername}}</div>
+    <div class="gifts">
+
+    </div>
+
+
+
+    <div class="login-container" style="display: none;">
+        <h1 class="login-title">Sign up</h1>
+        <form>
+            <input type="text" placeholder="Username" class="username" style="display: none;">
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Password" class="pw" required>
+            </div>
+            <input type="submit" value="회원가입" class="btn">
+
+        </form>
+    </div>
+    <script>
+
+        const SURL = 'http://127.0.0.1:5000'
+        if (localStorage.getItem('un') != null) {
+            const submitbtn = document.querySelector('.submitbtn')
+            let rate
+            const receivingusername = document.querySelector('.val')
+            console.log(receivingusername)
+            const giveform = document.querySelector('.giveform')
+            const gifts = document.querySelector('.gifts')
+            fetch(`${SURL}/checkgivegifts/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: localStorage.getItem('un'),
+
+                }),
+            }).then((response) => response.json())
+                .then((data) => {
+                    console.log(data, 'data')
+                    data.forEach(element => {
+                        var img = document.createElement('img')
+                        var ratespan = document.createElement('span');
+                        var span = document.createElement('span');
+                        span.className = 'gift'
+                        span.id = element
+                        ratespan.className = 'rate'
+                        ratespan.innerText = element
+                        img.src = "{{ url_for('static', filename='images/free-icon-giftbox-3349225.png') }}"
+                        img.width = 100
+                        img.height = 100
+                        span.appendChild(ratespan)
+                        span.appendChild(img)
+                        gifts.appendChild(span)
+
+                    });
+                    let imgs = document.querySelectorAll('img')
+                    console.log(imgs)
+                    for (const img of imgs) {
+                        img.addEventListener('click', giftclick)
+                    }
+                    function giftclick(e) {
+                        console.log("clickckckckckcckckcckckckckcckcckckckcck")
+                        rate = e.target.parentElement.id
+                        fetch(`${SURL}/givegifts/${receivingusername.innerText}`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                username: localStorage.getItem('un'),
+                                rate: rate,
+                                content: document.querySelector('.contentinput').value,
+                                writtenusername: document.querySelector('.name').value
+                            }),
+                        }).then((response) => location.replace(`${SURL}/mypage`))
+                    }
+                })
+        }
+        else {
+            document.querySelector('.login-container').style.display = 'block'
+        }
+        document.querySelector('.btn').addEventListener('click', (event) => {
+            event.preventDefault()
+            var pw = generatePassword(12)
+            document.querySelector('.username').value = pw
+            localStorage.setItem('un', pw)
+            console.log(localStorage.getItem('un'))
+            fetch(`${SURL}/signupnoreturn`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: localStorage.getItem('un'),
+                    pw:document.querySelector('.pw').value
+                }),
+            }).then(() => {
+                document.querySelector('.login-container').style.display = 'none'
+                console.log("hi")
+                location.reload()
+            })
+
+        })
+        function generatePassword(length) {
+            const digits = '0123456789';
+            const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+            const upperCaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const allCharacters = digits + lowerCaseLetters + upperCaseLetters;
+
+            // 비밀번호가 모든 유형의 문자를 포함하도록 보장하기 위한 부분
+            let password = '';
+
+            // 반드시 각 문자 유형이 포함되도록 각 유형에서 1개씩 추가
+            password += digits[Math.floor(Math.random() * digits.length)];
+            password += lowerCaseLetters[Math.floor(Math.random() * lowerCaseLetters.length)];
+            password += upperCaseLetters[Math.floor(Math.random() * upperCaseLetters.length)];
+
+            // 나머지 길이를 모두 채우기 위해 임의의 문자 추가
+            for (let i = 3; i < length; i++) {
+                password += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+            }
+
+            // 비밀번호를 무작위로 섞기
+            password = password.split('').sort(() => 0.5 - Math.random()).join('');
+
+            return password;
+        }
+    </script>
+</body>
+
+</html>

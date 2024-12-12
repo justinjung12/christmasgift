@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Jua&display=swap');
+
+        body{
+            background-color: rgba(244, 223, 30, 0.56);
+        }
+        h2{
+            margin-left: 36%;
+            margin-top: 60%;
+            font-family: "Jua", sans-serif;
+            font-size: 35px;
+            
+        }
+        form{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .pw{
+            width: 250px;
+            height: 40px;
+            font-size: 15px;
+            border: none;
+            border-radius: 20px;
+
+        }
+        .btn{
+            background-color: white;
+            border: none;
+            padding: 5px;
+            margin-top: 30px;
+            width: 90px;
+            height: 40px;
+            border-radius: 50px;
+            margin-left: 150px;
+            font-family: "Jua", sans-serif;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>회원가입</h2>
+        <form action="/signup" method="post">
+            <input type="text" name="id" placeholder="Username" class="username" style="display: none;">
+            <input type="password" name="pw" placeholder="Password" class="pw" required>
+            <input type="submit" value="회원가입/로그인" class="btn">
+        </form>
+    </div>
+    <script>
+        
+        function generatePassword(length) {
+            const digits = '0123456789';
+            const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+            const upperCaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const allCharacters = digits + lowerCaseLetters + upperCaseLetters;
+
+            // 비밀번호가 모든 유형의 문자를 포함하도록 보장하기 위한 부분
+            let password = '';
+
+            // 반드시 각 문자 유형이 포함되도록 각 유형에서 1개씩 추가
+            password += digits[Math.floor(Math.random() * digits.length)];
+            password += lowerCaseLetters[Math.floor(Math.random() * lowerCaseLetters.length)];
+            password += upperCaseLetters[Math.floor(Math.random() * upperCaseLetters.length)];
+
+            // 나머지 길이를 모두 채우기 위해 임의의 문자 추가
+            for (let i = 3; i < length; i++) {
+                password += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+            }
+
+            // 비밀번호를 무작위로 섞기
+            password = password.split('').sort(() => 0.5 - Math.random()).join('');
+
+            return password;
+        }
+
+
+
+        document.querySelector('.btn').addEventListener('click', () => {
+            if(localStorage.getItem('un') == null){
+                document.querySelector('.username').value = generatePassword(12)
+                localStorage.setItem('un', document.querySelector('.username').value)
+            }
+            
+        })
+    </script>
+</body>
+
+</html>
