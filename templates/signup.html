@@ -5,27 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Jua&display=swap');
 
-        body{
+        body {
             background-color: rgba(244, 223, 30, 0.56);
         }
-        h2{
+
+        h2 {
             margin-left: 36%;
             margin-top: 60%;
             font-family: "Jua", sans-serif;
             font-size: 35px;
-            
+
         }
-        form{
+
+        form {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
         }
-        .pw{
+
+        .pw {
             width: 250px;
             height: 40px;
             font-size: 15px;
@@ -33,7 +36,8 @@
             border-radius: 20px;
 
         }
-        .btn{
+
+        .btn {
             background-color: white;
             border: none;
             padding: 5px;
@@ -57,8 +61,11 @@
             <input type="submit" value="회원가입/로그인" class="btn">
         </form>
     </div>
+    <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-Rah0GTAG9gxXUXLs" data-ad-width="320"
+        data-ad-height="100"></ins>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     <script>
-        
+
         function generatePassword(length) {
             const digits = '0123456789';
             const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
@@ -83,15 +90,21 @@
 
             return password;
         }
-
-
+        if (localStorage.getItem('pw')) {
+            document.querySelector('.pw').value = localStorage.getItem('pw')
+        }
 
         document.querySelector('.btn').addEventListener('click', () => {
-            if(localStorage.getItem('un') == null){
+            if (localStorage.getItem('un') == null) {
                 document.querySelector('.username').value = generatePassword(12)
                 localStorage.setItem('un', document.querySelector('.username').value)
+                localStorage.setItem('pw', document.querySelector('.pw').value)
+
             }
-            
+            else {
+                document.querySelector('.username').value = localStorage.getItem('un')
+            }
+
         })
     </script>
 </body>
