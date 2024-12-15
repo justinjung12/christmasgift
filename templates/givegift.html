@@ -222,6 +222,7 @@
             var pw = generatePassword(12)
             document.querySelector('.username').value = pw
             localStorage.setItem('un', pw)
+            localStorage.setItem('pw',document.querySelector('.pw').value)
             console.log(localStorage.getItem('un'))
             fetch(`${SURL}/signupnoreturn`, {
                 method: "POST",
@@ -230,7 +231,7 @@
                 },
                 body: JSON.stringify({
                     id: localStorage.getItem('un'),
-                    pw:document.querySelector('.pw').value
+                    pw:localStorage.getItem('pw'),
                 }),
             }).then(() => {
                 document.querySelector('.login-container').style.display = 'none'
