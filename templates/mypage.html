@@ -138,17 +138,11 @@
     </div>
     <div class="content">선물받을 <span class="link" onclick="copy()">링크</span>를 공유해보세요</div>
     <button class="sendfriend" onclick="showgivefriends()">보낸친구</button>
-    <div class="coupon" style="display: none;">
-        <div class="title">Christmas web</div>
-        <div class="present">다이소 5000원 쿠폰</div>
-        <label for="instagram">인스타id</label>
-        <input type="text" class="instagram">
-        <button class="submit" onclick="receive()">받기</button>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        const SURL = 'https://port-0-christmasgift-17xco2lltmrmrpc.sel5.cloudtype.app'
+        const SURL = 'https://christmasgiftshare.site'
         const username = localStorage.getItem('un')
         let gift
 
@@ -196,10 +190,10 @@
 
                 }),
             }).then((response) => {
-                localStorage.setItem('useriid',document.querySelector('.instagram').value) 
+                localStorage.setItem('useriid', document.querySelector('.instagram').value)
                 location.reload()
                 document.querySelector('.instagram').value = localStorage.getItem("useriid")
-                
+
             })
         }
         function copy() {
@@ -276,9 +270,32 @@
                         .then((response) => response.json())
                         .then((data) => {
                             console.log(data)
-                            document.querySelector('.coupon').style.display = 'block'
+                            // document.querySelector('.coupon').style.display = 'block'
                             gift = data.gift
-                            document.querySelector('.present').innerText = gift
+                            // document.querySelector('.present').innerText = gift
+                            if (gift == "꽝") {
+                                Swal.fire("꽝 아쉽네요ㅠ");
+                            }
+                            else {
+                                const { value: ipAddress } = Swal.fire({
+                                    title: "축하합니다!" +' ' + gift + '에 당첨 되셨습니다',
+                                    input: "text",
+                                    inputLabel: "전화번호 또는 인스타아이디를 입력하세요",
+                                    inputValue,
+                                    showCancelButton: true,
+                                    inputValidator: (value) => {
+                                        if (!value) {
+                                            return "You need to write something!";
+                                        }
+                                    }
+                                });
+                                if (ipAddress) {
+                                    Swal.fire('최대 몇시간이 소요될 수 있습니다!');
+                                    receive()
+                                    location.reload()
+                                }
+                            }
+
                         });
 
                 }
