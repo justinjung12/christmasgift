@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect
 from flask_cors import CORS
 from datetime import datetime
 import random
-#마지막 해야할일:크리스마스때만 열리게하기,cors설정,localstorage에 이름 저장하는거 암호화
+#마지막 해야할일:크리스마스때만 열리게하기,cors설정,localstorage에  저장하는거 암호화
 app = Flask(__name__)
 CORS(app)
 
@@ -33,11 +33,11 @@ def choosegift(grade):
     rn2 = random.randint(0,grade)
     global price
     if(rn1 == rn2):
-        g1n = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,31,32,33]
-        g2n = [21,22,23,24,25,26,27,28,29,30]
-        g3n = [34,35,36,37,38,39,40]
-        g4n = [41,42,43,44,45]
-        g5n = [46,47,48,49]
+        g1n = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+        g2n = [21,22,23,24,25]
+        g3n = [34,35,36,37]
+        g4n = [41,42,43]
+        g5n = [46,47]
         g6n = [50]
 
         rn3 = random.randint(0,50)
@@ -147,13 +147,18 @@ def checkreceivedgifts():
     return 'error'
 
 
+
+def is_december_25th():
+    today = datetime.today()
+    return today.month == 12 and today.day == 25
+
 @app.route('/openreceivedgifts/',methods=['GET','POST']) #받은 선물을 열때
 def openreceivedgifts():
     if request.method == 'POST': #만약 POST라면
         print("post")
         now = datetime.now()
 
-        if(True): #12월 25일날 열 수 있게 하기
+        if(is_december_25th()): #12월 25일날 열 수 있게 하기
             gift = request.get_json()['giftindex'].split('.')#0:rate,1:giveusername
             for index,value in enumerate(gifts):
                 if(gifts[index]['id'] == request.get_json()['username']): #요청된 user name값이랑 gifts리스트 id에서 일치되는게 있으면 =
@@ -228,3 +233,5 @@ def giveuser():
             data.append(gifts[index]['receivedgift'])
 
     return data
+
+app.run()
