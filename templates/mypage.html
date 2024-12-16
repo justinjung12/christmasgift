@@ -20,7 +20,7 @@
         }
 
         .christmas {
-            position: absolute ;
+            position: absolute;
         }
 
         .tree {
@@ -257,36 +257,7 @@
             transform: rotate(40deg);
         }
 
-        .gift {
-            position: absolute;
-            width: 60px;
-            height: 50px;
-            background-color: #ffc857;
-            top: 130px;
-            left: 30px;
-            box-shadow: inset -8px 0 0 rgba(0, 0, 0, 0.07);
 
-        }
-
-        .gift:before {
-            content: "";
-            position: absolute;
-            width: 70px;
-            height: 15px;
-            background-color: #ffc857;
-            left: -5px;
-            box-shadow: inset -8px -4px 0 rgba(0, 0, 0, 0.07);
-
-        }
-
-        .gift:after {
-            content: "";
-            background-color: #db3a34;
-            width: 10px;
-            height: 50px;
-            position: absolute;
-            left: 25px;
-        }
 
         .ribbon {
             position: absolute;
@@ -509,7 +480,7 @@
         .content {
             font-size: 24px;
             position: absolute;
-            top: 90%;
+            top: 80%;
             left: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
@@ -526,9 +497,7 @@
             grid-template-columns: 120px 120px 120px;
             margin-left: 20px;
             margin-top: 120px;
-            width: 400px;
-            height: 150;
-            overflow: scroll;
+            position: absolute;
         }
 
         /* .gift{
@@ -623,6 +592,7 @@
             color: white;
 
         }
+
         body {
             margin: 0;
             height: 100vh;
@@ -651,36 +621,41 @@
                 transform: translateY(100vh);
             }
         }
+        .ad{
+            position: absolute;
+            top: 90%;
+        }
     </style>
 </head>
 
 <body>
-    <ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-k4qH6mBUja42MsB5"
-data-ad-width = "320"
-data-ad-height = "100"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    <div class="snow-container" id="snowContainer"></div>
+    <div class="ad">
+        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-k4qH6mBUja42MsB5" data-ad-width="320"
+            data-ad-height="100"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+        <div class="snow-container" id="snowContainer"></div>
+
+    </div>
 
     <div class="christmas">
         <div class="tree">
-          <div class="chain"></div>
-          <div class="chain2"></div>
+            <div class="chain"></div>
+            <div class="chain2"></div>
         </div>
         <div class="lights">
-          <div class="light1"></div>
-          <div class="light2"></div>
-          <div class="light3"></div>
-          <div class="light4"></div>
-          <div class="light5"></div>
-          <div class="light6"></div>
-          <div class="light7"></div>
-          <div class="light8"></div>
-          <div class="light9"></div>
-          <div class="light10"></div>
+            <div class="light1"></div>
+            <div class="light2"></div>
+            <div class="light3"></div>
+            <div class="light4"></div>
+            <div class="light5"></div>
+            <div class="light6"></div>
+            <div class="light7"></div>
+            <div class="light8"></div>
+            <div class="light9"></div>
+            <div class="light10"></div>
         </div>
         <div class="balls">
-          <div class="ball1"></div>  
+            <div class="ball1"></div>
         </div>
         <div class="star"></div>
         <div class="gift"></div>
@@ -690,10 +665,10 @@ data-ad-height = "100"></ins>
         <div class="gift3"></div>
         <div class="ribbon3"></div>
         <div class="shadow"></div>
-        
-      </div>
+
+    </div>
     <div class="receivedgifts">
-        
+
     </div>
 
     <div class="content">선물받을 <span class="link" onclick="copy()">링크</span>를 공유해보세요</div>
@@ -702,10 +677,8 @@ data-ad-height = "100"></ins>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        if(localStorage.getItem("un") && localStorage.getItem("un")){
-            document.querySelector('.errormessage').style.display = 'none'
-        }
-        const SURL = 'https://christmasgiftshare.site/'
+
+        const SURL = 'https://christmasgiftshare.site'
         const username = localStorage.getItem('un')
         let gift
 
@@ -782,7 +755,7 @@ data-ad-height = "100"></ins>
         }).then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                if(data.length > 0){
+                if (data.length > 0) {
                     document.querySelector('.christmas').style.display = 'none'
                 }
                 data.forEach(element => {
@@ -867,24 +840,24 @@ data-ad-height = "100"></ins>
                 }
             });
 
-            function createSnow() {
+        function createSnow() {
             const snowContainer = document.getElementById('snowContainer');
             const snow = document.createElement('div');
             snow.className = 'snow';
-            
+
             // 랜덤한 위치와 크기 설정
             const size = Math.random() * 5 + 5;
             const startX = Math.random() * window.innerWidth;
             const duration = Math.random() * 3 + 2;
-            
+
             snow.style.left = startX + 'px';
             snow.style.width = size + 'px';
             snow.style.height = size + 'px';
             snow.style.opacity = Math.random() * 0.5 + 0.5;
             snow.style.animationDuration = duration + 's';
-            
+
             snowContainer.appendChild(snow);
-            
+
             // 애니메이션이 끝나면 요소 제거
             setTimeout(() => {
                 snow.remove();
