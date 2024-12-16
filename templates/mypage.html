@@ -621,7 +621,8 @@
                 transform: translateY(100vh);
             }
         }
-        .ad{
+
+        .ad {
             position: absolute;
             top: 90%;
         }
@@ -680,9 +681,39 @@
 
         const SURL = 'https://christmasgiftshare.site'
         const username = localStorage.getItem('un')
+        const receivedgiftsdiv = document.querySelector('.receivedgifts')
+
         let gift
 
+        if (!username) {
+            for (x = 0; x < 5; x++) {
 
+            var imgt = document.createElement('img')
+            var ratespant = document.createElement('div');
+            var spant = document.createElement('span');
+            var namet = document.createElement('div')
+
+
+            spant.className = 'gift'
+
+            ratespant.className = 'rate'
+            ratespant.innerText = '1' + '등급'
+
+            namet.className = 'giveusername'
+            // name.innerText = element.giveusername
+
+            imgt.src = "{{ url_for('static', filename='images/free-icon-giftbox-3349225.png') }}"
+            imgt.width = 100
+            imgt.height = 100
+            imgt.id = 'testimg'
+            spant.appendChild(imgt)
+
+            spant.appendChild(ratespant)
+            spant.appendChild(namet)
+
+            receivedgiftsdiv.appendChild(spant)
+            }
+        }
 
         function showgivefriends() {
             fetch(`${SURL}/giveuser`, {
@@ -739,7 +770,6 @@
             })
         }
 
-        const receivedgiftsdiv = document.querySelector('.receivedgifts')
 
 
         fetch(`${SURL}/checkreceivedgifts/`, {
@@ -788,7 +818,13 @@
                 let imgs = document.querySelectorAll('img')
                 console.log(imgs)
                 for (const img of imgs) {
-                    img.addEventListener('click', giftclick)
+                    if(img.id == 'testimg'){
+                        alert("12월 25일날 열수 있습니다")
+                    }
+                    else{
+                        img.addEventListener('click', giftclick)
+                    }
+                    
                 }
                 function giftclick(e) {
                     console.log("hello")
