@@ -686,36 +686,61 @@
         let gift
 
         if (!username) {
-            for (x = 0; x < 5; x++) {
+            document.querySelector('.content').style.display = 'none'
+            Swal.fire("크리스마스 명언 친구들과 공유하세요!")
+            const christmasQuotes = [
+                "크리스마스는 단지 선물을 주고받는 날이 아니라, 사랑과 희망을 나누는 시간입니다.",
+                "진정한 크리스마스의 의미는 물질이 아닌, 마음 속의 따뜻함과 나눔에 있습니다.",
+                "크리스마스는 우리가 내면의 평화를 찾고, 다른 이들에게 그 평화를 나누는 날입니다.",
+                "가장 소중한 선물은 물질이 아니라, 시간을 나누고 함께하는 순간들입니다.",
+                "크리스마스의 진정한 기쁨은 우리가 가진 것을 나누는 데서 오는 법입니다.",
+                "크리스마스는 우리에게 삶의 가장 중요한 가치, 즉 사랑과 연민을 일깨워주는 기회입니다.",
+                "이 세상에서 가장 큰 기쁨은 다른 사람을 위해 살아가는 것, 크리스마스는 그 시작입니다.",
+                "크리스마스는 끝이 아닌, 새로운 시작을 의미하는 시간입니다. 그것은 사랑과 희망의 씨앗을 심는 계절입니다.",
+                "크리스마스는 우리가 서로를 진심으로 이해하고, 모든 갈등을 넘어서는 희망의 시간입니다.",
+                "진정한 크리스마스를 맞이하기 위해선 먼저 자신을 사랑하고, 그 사랑을 세상에 퍼뜨려야 합니다.",
+                "크리스마스는 우리가 불완전함을 받아들이고, 그 속에서 서로를 향한 자비를 찾는 날입니다.",
+                "크리스마스는 물질적인 풍요를 넘어, 정신적이고 영적인 풍요를 추구하는 시간입니다.",
+                "크리스마스는 일시적인 기쁨이 아니라, 지속적인 사랑과 연민의 마음을 만드는 계기입니다.",
+                "크리스마스가 다가오면, 우리는 내면의 고요와 평화를 되새기며, 사랑의 의미를 깊이 생각하게 됩니다.",
+                "크리스마스는 세상 모든 이들이 사랑을 실천할 수 있는 기회를 제공하는 시간입니다."
+            ];
+            for (x = 0; x < 10; x++) {
 
-            var imgt = document.createElement('img')
-            var ratespant = document.createElement('div');
-            var spant = document.createElement('span');
-            var namet = document.createElement('div')
+                var imgt = document.createElement('img')
+                var ratespant = document.createElement('div');
+                var spant = document.createElement('span');
+                var namet = document.createElement('div')
 
 
-            spant.className = 'gift'
+                spant.className = 'gift'
 
-            ratespant.className = 'rate'
-            ratespant.innerText = '1' + '등급'
+                ratespant.className = 'rate'
 
-            namet.className = 'giveusername'
-            // name.innerText = element.giveusername
+                namet.className = 'giveusername'
+                // name.innerText = element.giveusername
 
-            imgt.src = "{{ url_for('static', filename='images/free-icon-giftbox-3349225.png') }}"
-            imgt.width = 100
-            imgt.height = 100
-            imgt.id = 'testimg'
-                            imgt.addEventListener('click',()=>{
-                alert("12월 25일날 선물을 받을 수 있어요! 링크를 공유해 친구들로부터 선물을 받으세요")
-            })
+                imgt.src = "{{ url_for('static', filename='images/free-icon-giftbox-3349225.png') }}"
+                imgt.width = 100
+                imgt.height = 100
+                imgt.id = 'testimg'
+                imgt.className = christmasQuotes[x]
+                spant.appendChild(imgt)
+                imgt.addEventListener('click', (e) => {
 
-            spant.appendChild(imgt)
+                    window.navigator.clipboard.writeText(e.target.className).then(() => {
+                        Swal.fire({
+                            title: e.target.className,
+                            text: "복사되었습니다",
+                            icon: "success"
+                        });
+                    })
+                })
 
-            spant.appendChild(ratespant)
-            spant.appendChild(namet)
+                spant.appendChild(ratespant)
+                spant.appendChild(namet)
 
-            receivedgiftsdiv.appendChild(spant)
+                receivedgiftsdiv.appendChild(spant)
             }
         }
 
@@ -822,13 +847,12 @@
                 let imgs = document.querySelectorAll('img')
                 console.log(imgs)
                 for (const img of imgs) {
-                    if(img.id == 'testimg'){
-                        alert("12월 25일날 열수 있습니다")
+                    if (img.id == 'testimg') {
                     }
-                    else{
+                    else {
                         img.addEventListener('click', giftclick)
                     }
-                    
+
                 }
                 function giftclick(e) {
                     console.log("hello")
@@ -880,32 +904,6 @@
                 }
             });
 
-        function createSnow() {
-            const snowContainer = document.getElementById('snowContainer');
-            const snow = document.createElement('div');
-            snow.className = 'snow';
-
-            // 랜덤한 위치와 크기 설정
-            const size = Math.random() * 5 + 5;
-            const startX = Math.random() * window.innerWidth;
-            const duration = Math.random() * 3 + 2;
-
-            snow.style.left = startX + 'px';
-            snow.style.width = size + 'px';
-            snow.style.height = size + 'px';
-            snow.style.opacity = Math.random() * 0.5 + 0.5;
-            snow.style.animationDuration = duration + 's';
-
-            snowContainer.appendChild(snow);
-
-            // 애니메이션이 끝나면 요소 제거
-            setTimeout(() => {
-                snow.remove();
-            }, duration * 1000);
-        }
-
-        // 주기적으로 눈 생성
-        setInterval(createSnow, 100);
 
 
 
