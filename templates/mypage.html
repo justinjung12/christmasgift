@@ -1,1120 +1,241 @@
 <!DOCTYPE html>
-<html lang="en">
-<!-- 보낸친구,메세지 보기 기능 만들기,쿠폰 front에서 보여주고 인스타 id 받는 기능 만들기 -->
-<!-- 인스타 중복 안 하도록 입력창 자동화 만들기 -->
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5553321377490901"
-        crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>크리스마스 선물 추천</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
         body {
-            background-color: rgba(244, 223, 30, 0.56);
-
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #f0f2f5;
+            color: #333;
         }
 
-        .christmas {
-            position: absolute;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .tree {
-            position: relative;
-            background-color: #685044;
-            width: 30px;
-            height: 80px;
-            top: 100px;
-            transform-style: preserve-3d;
-        }
-
-        .tree:before {
-            content: "";
-            position: relative;
-            width: 0;
-            height: 0;
-            border-left: 90px solid transparent;
-            border-right: 90px solid transparent;
-            border-bottom: 270px solid #127475;
-            border-radius: 30px;
-            top: -250px;
-            left: -75px;
-        }
-
-
-
-        .chain {
-            width: 85px;
-            height: 85px;
-            border: solid 3px #333;
-            border-radius: 50%;
-            top: -185px;
-            left: -35px;
-            position: absolute;
-            transform: rotate3d(8, 0.1, -5, 75deg);
-            box-sizing: border-box;
-            backface-visibility: visible !important;
-            z-index: 5;
-        }
-
-        .chain2 {
-            width: 145px;
-            height: 135px;
-            border: solid 3px #333;
-            border-radius: 50%;
-            top: -115px;
-            left: -65px;
-            position: absolute;
-            transform: rotate3d(8, 0.1, -5, 75deg);
-            box-sizing: border-box;
-            backface-visibility: visible !important;
-            z-index: 5;
-
-        }
-
-        .shadow {
-            background-color: rgba(0, 0, 0, 0.07);
-            position: absolute;
-            width: 250px;
-            height: 30px;
-            border-radius: 50%;
-            top: 170px;
-            left: -115px;
-            z-index: -1;
-        }
-
-        .star {
-            margin: 50px 0;
-            position: absolute;
-            display: block;
-            width: 0px;
-            height: 0px;
-            border-right: 25px solid transparent;
-            border-bottom: 17.5px solid #f9dc5c;
-            border-left: 25px solid transparent;
-            transform: rotate(35deg);
-            top: -190px;
-            left: -9px;
-        }
-
-        .star:before {
-            border-bottom: 20px solid #f9dc5c;
-            border-left: 7.5px solid transparent;
-            border-right: 7.5px solid transparent;
-            position: absolute;
-            height: 0;
-            width: 0;
-            top: -12.5px;
-            left: -17.5px;
-            display: block;
-            content: '';
-            transform: rotate(-35deg);
-        }
-
-        .star:after {
-            position: absolute;
-            display: block;
-            top: 0.75px;
-            left: -26.25px;
-            width: 0px;
-            height: 0px;
-            border-right: 25px solid transparent;
-            border-bottom: 17.5px solid #f9dc5c;
-            border-left: 25px solid transparent;
-            transform: rotate(-70deg);
-            content: '';
-        }
-
-        .lights {
-            position: absolute;
-
-        }
-
-        .light1 {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-        }
-
-        .light1 {
-            background-color: #ff595e;
-            top: -100px;
-            left: -35px;
-            transform: rotate(40deg);
-            box-shadow: 1px 1px 15px #faf3dd;
-        }
-
-        .light2 {
-            position: absolute;
-            background-color: #ffca3a;
-            top: -95px;
-            left: -10px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light3 {
-            position: absolute;
-            background-color: #6a4c93;
-            top: -105px;
-            left: 15px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light4 {
-            position: absolute;
-            background-color: #1982c4;
-            top: -118px;
-            left: 35px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light5 {
-            position: absolute;
-            background-color: #1982c4;
-            top: 12px;
-            left: -55px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light6 {
-            position: absolute;
-            background-color: #8ac926;
-            top: 15px;
-            left: -25px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light7 {
-            position: absolute;
-            background-color: #ff595e;
-            top: 10px;
-            left: 2px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light8 {
-            position: absolute;
-            background-color: #ffca3a;
-            top: -2px;
-            left: 27px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light9 {
-            position: absolute;
-            background-color: #9e0059;
-            top: -17px;
-            left: 50px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-        .light10 {
-            position: absolute;
-            background-color: #4361ee;
-            top: -40px;
-            left: 68px;
-            box-shadow: 1px 1px 15px #faf3dd;
-            width: 15px;
-            height: 15px;
-            border-radius: 10px 150px 30px 150px;
-            transform: rotate(40deg);
-        }
-
-
-
-        .ribbon {
-            position: absolute;
-            width: 20px;
-            height: 10px;
-            border: 3px solid #db3a34;
-            border-radius: 50%;
-            transform: skew(15deg, 15deg);
-            top: 116px;
-            left: 35px;
-        }
-
-        .ribbon:before {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 10px;
-            border: 3px solid #db3a34;
-            border-radius: 50%;
-            transform: skew(-15deg, -20deg);
-            left: 22px;
-            top: -8px;
-        }
-
-        .gift2 {
-            position: absolute;
-            width: 50px;
-            height: 40px;
-            background-color: #08bdbd;
-            top: 140px;
-            left: -65px;
-            box-shadow: inset -8px 0 0 rgba(0, 0, 0, 0.07);
-
-        }
-
-        .gift2:before {
-            content: "";
-            position: absolute;
-            width: 60px;
-            height: 15px;
-            background-color: #08bdbd;
-            left: -5px;
-            box-shadow: inset -8px -4px 0 rgba(0, 0, 0, 0.07);
-
-        }
-
-        .gift2:after {
-            content: "";
-            background-color: #abff4f;
-            width: 10px;
-            height: 40px;
-            position: absolute;
-            left: 15px;
-        }
-
-        .gift3 {
-            position: absolute;
-            width: 40px;
-            height: 30px;
-            background-color: #7678ed;
-            top: 150px;
-            left: -85px;
-            box-shadow: inset -8px 0 0 rgba(0, 0, 0, 0.07);
-
-        }
-
-        .gift3:before {
-            content: "";
-            position: absolute;
-            width: 50px;
-            height: 10px;
-            background-color: #7678ed;
-            left: -5px;
-            box-shadow: inset -8px -4px 0 rgba(0, 0, 0, 0.07);
-
-        }
-
-        .gift3:after {
-            content: "";
-            background-color: #f7b801;
-            width: 7px;
-            height: 30px;
-            position: absolute;
-            left: 15px;
-        }
-
-        .ribbon2 {
-            position: absolute;
-            width: 15px;
-            height: 7px;
-            border: 3px solid #abff4f;
-            border-radius: 50%;
-            transform: skew(15deg, 15deg);
-            top: 129px;
-            left: -65px;
-        }
-
-        .ribbon2:before {
-            content: "";
-            position: absolute;
-            width: 15px;
-            height: 7px;
-            border: 3px solid #abff4f;
-            border-radius: 50%;
-            transform: skew(-15deg, -20deg);
-            left: 15px;
-            top: -8px;
-        }
-
-        .ribbon3 {
-            position: absolute;
-            width: 12px;
-            height: 5px;
-            border: 3px solid #f7b801;
-            border-radius: 50%;
-            transform: skew(15deg, 15deg);
-            top: 142px;
-            left: -85px;
-        }
-
-        .ribbon3:before {
-            content: "";
-            position: absolute;
-            width: 12px;
-            height: 5px;
-            border: 3px solid #f7b801;
-            border-radius: 50%;
-            transform: skew(-15deg, -20deg);
-            left: 15px;
-            top: -8px;
-        }
-
-        .balls {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #db3a34;
-            top: 15px;
-            left: -15px;
-        }
-
-        .balls:before {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #ffc857;
-            top: 35px;
-            left: -15px;
-        }
-
-        .balls:after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #f07167;
-            top: 20px;
-            left: 45px;
-        }
-
-        .ball1 {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #fae588;
-            top: -90px;
-            left: 20px;
-
-        }
-
-        .ball1:before {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #fae588;
-            content: "";
-            top: 170px;
-            left: 50px
-        }
-
-        .light1,
-        .light2,
-        .light3,
-        .light4,
-        .light5,
-        .light6,
-        .light7,
-        .light8,
-        .light9,
-        .light10 {
-            -webkit-animation: flash 6s infinite;
-        }
-
-        @-webkit-keyframes flash {
-
-            20%,
-            24%,
-            55% {
-                box-shadow: none;
-            }
-
-            0%,
-            19%,
-            21%,
-            23%,
-            25%,
-            54%,
-            56%,
-            100% {
-                box-shadow: 0 0 5px #f5de93, 0 0 15px #f5de93, 0 0 20px #f5de93, 0 0 40px #f5de93, 0 0 60px #decea4, 0 0 10px #d6c0a5, 0 0 98px #ff0000;
-            }
-        }
-
-        .content {
-            font-size: 24px;
-            position: absolute;
-            top: 80%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-        }
-
-        .link {
-            color: #17ACFF;
-            text-decoration: underline;
-
-        }
-
-        .receivedgifts {
-            display: grid;
-            grid-template-columns: 120px 120px 120px;
-            margin-left: 20px;
-            margin-top: 120px;
-            position: absolute;
-        }
-
-        /* .gift{
-            margin-left: 10px;
-        } */
-        .rate {
-            position: relative;
-            left: 25%;
-            font-weight: 900;
-        }
-
-        .sendfriend {
-            background-color: #ffffff;
-            border: none;
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #d42426;
+            color: white;
             border-radius: 10px;
-            padding: 10px;
-            font-size: 15px;
-            font-weight: 900;
-            position: absolute;
-            top: 3%;
-            left: 74%;
+            margin-bottom: 30px;
         }
 
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Jua&display=swap');
-
-        body {
-            background-color: rgba(244, 223, 30, 0.56);
-
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
 
-        .coupon {
-            background: white;
-            width: 300px;
-            height: 500px;
-            border-radius: 20px;
-            padding: 10px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid rgb(122, 122, 122);
+        .selection-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .title {
-            color: rgb(0, 0, 0);
-            font-weight: 900;
-            font-size: 30px;
-            white-space: nowrap;
-            margin-left: 10%;
-            margin-top: 10px;
-            font-family: "Poppins", sans-serif;
-
-        }
-
-        .present {
-            color: rgb(0, 0, 0);
-            font-weight: 700;
-            font-size: 20px;
-            margin-left: 70px;
-            margin-top: 150px;
-            font-family: "Jua", sans-serif;
-
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
-            color: rgb(0, 0, 0);
-            font-weight: 800;
-            margin-left: 20px;
-
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
 
-        .instagram {
-            border: none;
-            width: 200px;
-            height: 20px;
-            border-radius: 10px;
-            margin-top: 100px;
-            border: 1px solid black;
-        }
-
-        .submit {
-            margin-left: 110px;
-            margin-top: 100px;
-            background-color: rgb(255, 22, 22);
-            border: none;
-            padding: 5px;
-            width: 100px;
-            font-size: 20px;
-            font-family: "Jua", sans-serif;
-            border-radius: 10px;
-            color: white;
-
-        }
-
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .snow-container {
+        select {
             width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
-        .snow {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: white;
-            border-radius: 50%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-
-        .ad {
-            position: absolute;
-            top: 90%;
-        }
-
-
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-        #startScreen {
-            text-align: center;
-        }
-        #gameContainer {
-            width: 800px;
-            height: 600px;
-            background: #0f2440;
-            position: relative;
-            overflow: hidden;
-            display: none;
-        }
-        #player {
-            width: 80px;
-            height: 30px;
-            background: #ff4444;
-            position: absolute;
-            bottom: 20px;
-            left: 375px;
-            transition: left 0.1s;
-            border-radius: 15px;
-        }
-        .snowflake {
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            color: white;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: rotate 3s linear infinite;
-        }
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        #score {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 24px;
-        }
-        #gameOver {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 48px;
-            text-align: center;
-        }
-        .button {
-            padding: 15px 30px;
-            font-size: 24px;
-            cursor: pointer;
-            background: #ff4444;
+        button {
+            background-color: #d42426;
             color: white;
             border: none;
-            border-radius: 8px;
-            transition: transform 0.2s, background-color 0.3s;
-            position: absolute;
-            left: 90%;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
         }
-        .button:hover {
-            background: #ff6666;
-            transform: scale(1.05);
+
+        button:hover {
+            background-color: #b91d1f;
         }
-        #startButton {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+
+        .recommendations {
+            margin-top: 30px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: none;
         }
-        #pauseButton {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 16px;
-            padding: 8px 16px;
+
+        .gift-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .gift-item h3 {
+            color: #d42426;
+            margin-bottom: 10px;
+        }
+
+        .christmas-decoration {
+            text-align: center;
+            font-size: 40px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px 0;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
-
 <body>
-    <div class="ad">
-        <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-k4qH6mBUja42MsB5" data-ad-width="320"
-            data-ad-height="100"></ins>
-        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-        <div class="snow-container" id="snowContainer"></div>
+    <div class="container">
+        <header>
+            <h1>🎄 크리스마스 선물 추천 🎁</h1>
+            <p>성별과 연령대를 선택하시면 맞춤 선물을 추천해드립니다!</p>
+        </header>
 
-    </div>
+        <div class="selection-form">
+            <div class="form-group">
+                <label for="gender">성별</label>
+                <select id="gender">
+                    <option value="">선택해주세요</option>
+                    <option value="male">남성</option>
+                    <option value="female">여성</option>
+                </select>
+            </div>
 
-    <div class="christmas">
-        <div class="tree">
-            <div class="chain"></div>
-            <div class="chain2"></div>
+            <div class="form-group">
+                <label for="age">연령대</label>
+                <select id="age">
+                    <option value="">선택해주세요</option>
+                    <option value="10s">10대</option>
+                    <option value="20s">20대</option>
+                    <option value="30s">30대</option>
+                    <option value="40s">40대 이상</option>
+                </select>
+            </div>
+
+            <button onclick="recommendGifts()">선물 추천받기</button>
         </div>
-        <div class="lights">
-            <div class="light1"></div>
-            <div class="light2"></div>
-            <div class="light3"></div>
-            <div class="light4"></div>
-            <div class="light5"></div>
-            <div class="light6"></div>
-            <div class="light7"></div>
-            <div class="light8"></div>
-            <div class="light9"></div>
-            <div class="light10"></div>
+
+        <div class="recommendations" id="recommendations">
+            <h2>추천 선물 목록</h2>
+            <div id="giftList"></div>
         </div>
-        <div class="balls">
-            <div class="ball1"></div>
+
+        <div class="christmas-decoration">
+            ⛄️ 🎄 🎅
         </div>
-        <div class="star"></div>
-        <div class="gift"></div>
-        <div class="ribbon"></div>
-        <div class="gift2"></div>
-        <div class="ribbon2"></div>
-        <div class="gift3"></div>
-        <div class="ribbon3"></div>
-        <div class="shadow"></div>
-
     </div>
-    <div class="receivedgifts">
-
-    </div>
-        <button id="playButton" class="button">게임 시작</button>
-
-    
-    <div id="gameContainer">
-        <div id="score">점수: <span id="scoreValue">0</span></div>
-        <button id="pauseButton" class="button">일시정지</button>
-        <div id="player"></div>
-        <div id="gameOver">게임 오버!</div>
-        <button id="startButton" class="button">다시 시작</button>
-    </div>
-
-    <div class="content">선물받을 <span class="link" onclick="copy()">링크</span>를 공유해보세요</div>
-    <button class="sendfriend" onclick="showgivefriends()">보낸친구</button>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
-        const SURL = 'https://christmasgiftshare.site'
-        const username = localStorage.getItem('un')
-        const receivedgiftsdiv = document.querySelector('.receivedgifts')
-
-        let gift
-
-        if (!username) {
-            const startScreen = document.getElementById('startScreen');
-            const gameContainer = document.getElementById('gameContainer');
-            const player = document.getElementById('player');
-            const scoreElement = document.getElementById('scoreValue');
-            const gameOverElement = document.getElementById('gameOver');
-            const startButton = document.getElementById('startButton');
-            const playButton = document.getElementById('playButton');
-            const pauseButton = document.getElementById('pauseButton');
-
-            let score = 0;
-            let gameActive = false;
-            let gamePaused = false;
-            let snowflakes = [];
-            let playerX = 375;
-            let snowflakeInterval;
-            let moveInterval;
-
-            function movePlayer(e) {
-                if (!gameActive || gamePaused) return;
-
-                if (e.key === 'ArrowLeft' && playerX > 0) {
-                    playerX -= 15;
-                } else if (e.key === 'ArrowRight' && playerX < gameContainer.offsetWidth - 80) {
-                    playerX += 15;
-                }
-
-                player.style.left = playerX + 'px';
-            }
-
-            function createSnowflake() {
-                if (!gameActive || gamePaused) return;
-
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.innerHTML = '❆';
-                snowflake.style.left = Math.random() * (gameContainer.offsetWidth - 20) + 'px';
-                snowflake.style.top = '0px';
-                gameContainer.appendChild(snowflake);
-                snowflakes.push(snowflake);
-            }
-
-            function moveSnowflakes() {
-                if (!gameActive || gamePaused) return;
-
-                snowflakes.forEach((snowflake, index) => {
-                    const top = parseInt(snowflake.style.top) + 1.5;
-                    snowflake.style.top = top + 'px';
-
-                    if (top > gameContainer.offsetHeight - 50) {
-                        const snowflakeLeft = parseInt(snowflake.style.left);
-                        if (snowflakeLeft > playerX - 20 && snowflakeLeft < playerX + 80) {
-                            score += 10;
-                            scoreElement.textContent = score;
-                            gameContainer.removeChild(snowflake);
-                            snowflakes.splice(index, 1);
-                        }
-                    }
-
-                    if (top > gameContainer.offsetHeight) {
-                        endGame();
-                    }
-                });
-            }
-
-            function startGame() {
-                gameContainer.style.display = 'block';
-
-                score = 0;
-                scoreElement.textContent = score;
-                gameActive = true;
-                gamePaused = false;
-
-                gameOverElement.style.display = 'none';
-                startButton.style.display = 'none';
-
-                snowflakes.forEach(snowflake => gameContainer.removeChild(snowflake));
-                snowflakes = [];
-
-                playerX = 375;
-                player.style.left = playerX + 'px';
-
-                snowflakeInterval = setInterval(createSnowflake, 1500);
-                moveInterval = setInterval(moveSnowflakes, 20);
-            }
-
-            function endGame() {
-                gameActive = false;
-                clearInterval(snowflakeInterval);
-                clearInterval(moveInterval);
-                gameOverElement.style.display = 'block';
-                startButton.style.display = 'block';
-            }
-
-            function togglePause() {
-                gamePaused = !gamePaused;
-                pauseButton.textContent = gamePaused ? '게임 재개' : '일시정지';
-            }
-
-            document.addEventListener('keydown', movePlayer);
-            startButton.addEventListener('click', startGame);
-            playButton.addEventListener('click', startGame);
-            pauseButton.addEventListener('click', togglePause);
-            document.querySelector('.content').style.display = 'none'
-            Swal.fire("크리스마스 명언 친구들과 공유하세요! 미니 게임도 준비되어 있으니 친구들과 함께하세요!")
-            const christmasQuotes = [
-                "크리스마스는 단지 선물을 주고받는 날이 아니라, 사랑과 희망을 나누는 시간입니다.",
-                "진정한 크리스마스의 의미는 물질이 아닌, 마음 속의 따뜻함과 나눔에 있습니다.",
-                "크리스마스는 우리가 내면의 평화를 찾고, 다른 이들에게 그 평화를 나누는 날입니다.",
-                "가장 소중한 선물은 물질이 아니라, 시간을 나누고 함께하는 순간들입니다.",
-                "크리스마스의 진정한 기쁨은 우리가 가진 것을 나누는 데서 오는 법입니다.",
-                "크리스마스는 우리에게 삶의 가장 중요한 가치, 즉 사랑과 연민을 일깨워주는 기회입니다.",
-                "이 세상에서 가장 큰 기쁨은 다른 사람을 위해 살아가는 것, 크리스마스는 그 시작입니다.",
-                "크리스마스는 끝이 아닌, 새로운 시작을 의미하는 시간입니다. 그것은 사랑과 희망의 씨앗을 심는 계절입니다.",
-                "크리스마스는 우리가 서로를 진심으로 이해하고, 모든 갈등을 넘어서는 희망의 시간입니다.",
-                "진정한 크리스마스를 맞이하기 위해선 먼저 자신을 사랑하고, 그 사랑을 세상에 퍼뜨려야 합니다.",
-                "크리스마스는 우리가 불완전함을 받아들이고, 그 속에서 서로를 향한 자비를 찾는 날입니다.",
-                "크리스마스는 물질적인 풍요를 넘어, 정신적이고 영적인 풍요를 추구하는 시간입니다.",
-                "크리스마스는 일시적인 기쁨이 아니라, 지속적인 사랑과 연민의 마음을 만드는 계기입니다.",
-                "크리스마스가 다가오면, 우리는 내면의 고요와 평화를 되새기며, 사랑의 의미를 깊이 생각하게 됩니다.",
-                "크리스마스는 세상 모든 이들이 사랑을 실천할 수 있는 기회를 제공하는 시간입니다."
-            ];
-            for (x = 0; x < 10; x++) {
-
-                var imgt = document.createElement('img')
-                var ratespant = document.createElement('div');
-                var spant = document.createElement('span');
-                var namet = document.createElement('div')
-
-
-                spant.className = 'gift'
-
-                ratespant.className = 'rate'
-
-                namet.className = 'giveusername'
-                // name.innerText = element.giveusername
-
-                imgt.src = "{{ url_for('static', filename='images/free-icon-giftbox-3349225.png') }}"
-                imgt.width = 100
-                imgt.height = 100
-                imgt.id = 'testimg'
-                imgt.className = christmasQuotes[x]
-                spant.appendChild(imgt)
-                imgt.addEventListener('click', (e) => {
-
-                    window.navigator.clipboard.writeText(e.target.className).then(() => {
-                        Swal.fire({
-                            title: e.target.className,
-                            text: "복사되었습니다",
-                            icon: "success"
-                        });
-                    })
-                })
-
-                spant.appendChild(ratespant)
-                spant.appendChild(namet)
-
-                receivedgiftsdiv.appendChild(spant)
-            }
-        }
-
-        function showgivefriends() {
-            fetch(`${SURL}/giveuser`, {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: username,
-                }),
-            }).then((response) => response.json())
-                .then((data) => {
-                    var user = []
-                    console.log(data)
-                    data[0].forEach(element => {
-                        user.push(element['giveusername'])
-                    });
-                    Swal.fire({
-                        icon: 'info',
-                        title: '보낸 사람 목록',
-                        text: user,
-                    })
-                });
-        }
-        function receive() {
-
-            console.log(gift)
-            document.querySelector('.coupon').style.display = 'none'
-
-            fetch(`${SURL}/saveopen`, {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: username,
-                    giftindex: gift,
-                    Id: document.querySelector('.instagram').value
-
-                }),
-            }).then((response) => {
-                localStorage.setItem('useriid', document.querySelector('.instagram').value)
-                location.reload()
-                document.querySelector('.instagram').value = localStorage.getItem("useriid")
-
-            })
-        }
-        function copy() {
-            window.navigator.clipboard.writeText(`${SURL}/givegifts/${username}`).then(() => {
-                // 복사가 완료되면 호출된다.
-                alert("링크 복사완료");
-            })
-        }
-
-
-
-        fetch(`${SURL}/checkreceivedgifts/`, {
-            method: "POST",
-            async: false,
-            headers: {
-                "Content-Type": "application/json",
+        const giftDatabase = {
+            male: {
+                '10s': [
+                    { name: '게임기', description: '닌텐도 스위치나 PS5 등 인기 게임기' },
+                    { name: '무선 이어폰', description: '음악과 게임을 즐길 수 있는 블루투스 이어폰' },
+                    { name: '스포츠 용품', description: '축구공, 농구공 등 좋아하는 운동 용품' }
+                ],
+                '20s': [
+                    { name: '향수', description: '트렌디한 남성용 향수' },
+                    { name: '스마트워치', description: '건강 관리와 스타일을 동시에' },
+                    { name: '가죽 지갑', description: '고급스러운 가죽 소재의 지갑' }
+                ],
+                '30s': [
+                    { name: '프리미엄 커피 머신', description: '집에서 즐기는 고급 커피' },
+                    { name: '가죽 서류가방', description: '비즈니스에 어울리는 세련된 가방' },
+                    { name: '골프 용품', description: '골프 글러브나 용품 세트' }
+                ],
+                '40s': [
+                    { name: '건강식품 세트', description: '홍삼, 영양제 등 건강 선물 세트' },
+                    { name: '마사지기', description: '목, 어깨 마사지기' },
+                    { name: '고급 와인', description: '특별한 날에 어울리는 와인' }
+                ]
             },
-            body: JSON.stringify({
-                username: username,
+            female: {
+                '10s': [
+                    { name: '화장품 세트', description: '10대를 위한 기초 화장품 세트' },
+                    { name: '귀여운 에어팟 케이스', description: '캐릭터나 귀여운 디자인의 케이스' },
+                    { name: '인스탁스 미니', description: '추억을 즉석에서 남길 수 있는 폴라로이드 카메라' }
+                ],
+                '20s': [
+                    { name: '명품 지갑', description: '트렌디한 브랜드의 작은 지갑' },
+                    { name: '향수', description: '달콤하고 여성스러운 향의 향수' },
+                    { name: '주얼리', description: '심플하고 데일리로 착용하기 좋은 주얼리' }
+                ],
+                '30s': [
+                    { name: '고급 스킨케어 세트', description: '프리미엄 안티에이징 케어 세트' },
+                    { name: '디자이너 백', description: '데일리로 매치하기 좋은 브랜드 가방' },
+                    { name: '홈케어 제품', description: '아로마 디퓨저나 캔들 세트' }
+                ],
+                '40s': [
+                    { name: '프리미엄 화장품', description: '고급 브랜드의 안티에이징 화장품' },
+                    { name: '실크 스카프', description: '고급스러운 실크 소재의 스카프' },
+                    { name: '건강차 세트', description: '작설차, 홍차 등 프리미엄 차 세트' }
+                ]
+            }
+        };
 
-            }),
-        }).then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-                if (data.length > 0) {
-                    document.querySelector('.christmas').style.display = 'none'
-                }
-                data.forEach(element => {
-                    var img = document.createElement('img')
-                    var ratespan = document.createElement('div');
-                    var span = document.createElement('span');
-                    var name = document.createElement('div')
+        function recommendGifts() {
+            const gender = document.getElementById('gender').value;
+            const age = document.getElementById('age').value;
+            const recommendationsDiv = document.getElementById('recommendations');
+            const giftList = document.getElementById('giftList');
 
+            if (!gender || !age) {
+                alert('성별과 연령대를 모두 선택해주세요!');
+                return;
+            }
 
-                    span.className = 'gift'
-                    span.id = element.giftrate + '.' + element.giveusername
+            const recommendations = giftDatabase[gender][age];
+            giftList.innerHTML = '';
 
-                    ratespan.className = 'rate'
-                    ratespan.innerText = element.giftrate + '등급'
-
-                    name.className = 'giveusername'
-                    // name.innerText = element.giveusername
-
-                    img.src = "{{ url_for('static', filename='images/free-icon-giftbox-3349225.png') }}"
-                    img.width = 100
-                    img.height = 100
-                    span.appendChild(img)
-
-                    span.appendChild(ratespan)
-                    span.appendChild(name)
-
-                    receivedgiftsdiv.appendChild(span)
-
-                });
-                let imgs = document.querySelectorAll('img')
-                console.log(imgs)
-                for (const img of imgs) {
-                    if (img.id == 'testimg') {
-                    }
-                    else {
-                        img.addEventListener('click', giftclick)
-                    }
-
-                }
-                function giftclick(e) {
-                    console.log("hello")
-                    e.preventDefault();
-                    var rate = e.target.parentElement.id
-                    fetch(`${SURL}/openreceivedgifts/`, {
-                        method: "POST",
-                        async: false,
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            username: username,
-                            giftindex: rate,
-
-                        }),
-                    })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            console.log(data)
-                            // document.querySelector('.coupon').style.display = 'block'
-                            gift = data.gift
-                            // document.querySelector('.present').innerText = gift
-                            if (gift == "꽝") {
-                                Swal.fire("꽝 아쉽네요ㅠ");
-                            }
-                            else {
-                                const { value: ipAddress } = Swal.fire({
-                                    title: "축하합니다!" + ' ' + gift + '에 당첨 되셨습니다',
-                                    input: "text",
-                                    inputLabel: "전화번호 또는 인스타아이디를 입력하세요",
-                                    inputValue,
-                                    showCancelButton: true,
-                                    inputValidator: (value) => {
-                                        if (!value) {
-                                            return "You need to write something!";
-                                        }
-                                    }
-                                });
-                                if (ipAddress) {
-                                    Swal.fire('최대 몇시간이 소요될 수 있습니다!');
-                                    receive()
-                                    location.reload()
-                                }
-                            }
-
-                        });
-
-                }
+            recommendations.forEach(gift => {
+                const giftElement = document.createElement('div');
+                giftElement.className = 'gift-item';
+                giftElement.innerHTML = `
+                    <h3>${gift.name}</h3>
+                    <p>${gift.description}</p>
+                `;
+                giftList.appendChild(giftElement);
             });
 
-
-
-
-
-
+            recommendationsDiv.style.display = 'block';
+            recommendationsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 </body>
-
 </html>
