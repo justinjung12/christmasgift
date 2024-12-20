@@ -40,7 +40,7 @@ def choosegift(grade):
         g5n = [46,47]
         g6n = [50]
 
-        rn3 = random.randint(0,2000)
+        rn3 = random.randint(0,2500)
 
         if(rn3 in g1n):
             price += 300
