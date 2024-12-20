@@ -13,7 +13,7 @@ def givegiftgrade():
     global giftgrade
     giftgrade = []
     for x in range(0,random.randint(3,6)):
-        n = random.randint(0,100)
+        n = random.randint(0,1500)
         if(n in range(0,5)):
             giftgrade.append('1')
         elif(n in range(5,15)):
