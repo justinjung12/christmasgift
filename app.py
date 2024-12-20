@@ -13,7 +13,7 @@ def givegiftgrade():
     global giftgrade
     giftgrade = []
     for x in range(0,random.randint(3,6)):
-        n = random.randint(0,1500)
+        n = random.randint(0,100)
         if(n in range(0,5)):
             giftgrade.append('1')
         elif(n in range(5,15)):
@@ -40,7 +40,7 @@ def choosegift(grade):
         g5n = [46,47]
         g6n = [50]
 
-        rn3 = random.randint(0,150)
+        rn3 = random.randint(0,50)
 
         if(rn3 in g1n):
             price += 300
